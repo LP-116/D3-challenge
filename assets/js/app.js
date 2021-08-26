@@ -30,11 +30,11 @@ d3.csv("data.csv").then(function(stateData) {
     });
 
     var xLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(stateData, d => d.poverty)])
+      .domain([8, d3.max(stateData, d => d.poverty)])
       .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-      .domain([0, d3.max(stateData, d => d.healthcare)])
+      .domain([4, d3.max(stateData, d => d.healthcare)])
       .range([height, 0]);
 
     var bottomAxis = d3.axisBottom(xLinearScale);
@@ -55,7 +55,7 @@ d3.csv("data.csv").then(function(stateData) {
       .attr("cy", d => yLinearScale(d.healthcare))
       .attr("r", "15")
       .attr("fill", "blue")
-      .attr("opacity", ".75");
+      .attr("opacity", ".40");
   
 
       chartGroup.append("text")
@@ -64,13 +64,13 @@ d3.csv("data.csv").then(function(stateData) {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
-      .text("Number of Billboard 100 Hits");
+      .text("Healthcare %");
 
 
       chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
       .attr("class", "axisText")
-      .text("Hair Metal Band Hair Length (inches)");
+      .text("Poverty %");
   }).catch(function(error) {
     console.log(error);
 
