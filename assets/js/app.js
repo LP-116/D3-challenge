@@ -47,7 +47,7 @@ d3.csv("data.csv").then(function(stateData) {
     chartGroup.append("g")
       .call(leftAxis);
 
-      var circlesGroup = chartGroup.selectAll("circle")
+    var circlesGroup = chartGroup.selectAll("circle")
       .data(stateData)
       .enter()
       .append("circle")
@@ -56,7 +56,18 @@ d3.csv("data.csv").then(function(stateData) {
       .attr("r", "15")
       .attr("fill", "blue")
       .attr("opacity", ".40");
-  
+
+    var circleLabels = chartGroup.selectAll(null)
+        .data(stateData)
+        .enter()
+        .append("text")
+        .attr("x", d => xLinearScale(d.poverty))
+        .attr("y", d => yLinearScale(d.healthcare))
+        .text(d => d.abbr)
+        .attr("font-size", "11px")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white");
+ 
 
       chartGroup.append("text")
       .attr("transform", "rotate(-90)")
@@ -64,13 +75,13 @@ d3.csv("data.csv").then(function(stateData) {
       .attr("x", 0 - (height / 2))
       .attr("dy", "1em")
       .attr("class", "axisText")
-      .text("Healthcare %");
+      .text("Lacks Healthcare %");
 
 
       chartGroup.append("text")
       .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
       .attr("class", "axisText")
-      .text("Poverty %");
+      .text("In Poverty %");
   }).catch(function(error) {
     console.log(error);
 
