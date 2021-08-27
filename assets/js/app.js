@@ -71,6 +71,7 @@ d3.csv("data.csv").then(function(stateData) {
         .text(d => d.abbr)
         .attr("font-size", "11px")
         .attr("text-anchor", "middle")
+        .attr("alignment-baseline", "middle")
         .attr("fill", "white");
 
     var toolTip = d3.tip()
