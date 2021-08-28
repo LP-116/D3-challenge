@@ -44,6 +44,82 @@ function renderAxis(newXScale, xAxis) {
     return xAxis;
 }
 
+function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+
+    circlesGroup.transition()
+        .duration(1000)
+        .attr("cx",  d => newXScale(d[chosenXAxis]));
+
+    return circlesGroup;
+}
+
+function updateToolTip(chosenXAxis, circlesGroup) {
+
+    var label;
+
+    if (chosenXAxis === "poverty") {
+        label = "In Poverty %";
+    }
+
+    else if (chosenXAxis === "age") {
+        label = "Age (Median)";
+    }
+
+    else {
+        label = "Household Income (Median)"
+    }
+
+    var toolTip = d3.tip()
+        .attr("class", "tooltip")
+        .offset([10, -10])
+        .html(function(d) {return (`${d.state}<br>${label}: ${d[chosenXAxis]} <br>Healthcare: ${d.healthcare}`);
+    });
+
+    circlesGroup.on("mouseover", function(data) {
+        toolTip.show(data);
+    })
+
+        .on("mouseout", function(data, index) {
+            toolTip.hide(data);
+        });
+    
+    return circlesGroup;
+}
+
+d3.csv("data.csv").then(function(stateData, err) {
+
+    if (err) throw err;
+
+        stateData.forEach(function(data) {
+            data.poverty = +data.poverty;
+            data.healthcare = +data.healthcare;
+        });
+
+        var xLinearScale = xScale(stateData, chosenXAxis)
+
+        var yLinearScale = d3.scaleLinear()
+            .domain([4, d3.max(stateData, d => d.healthcare)])
+            .range([height, 0]);
+
+        
+
+
+}
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 d3.csv("data.csv").then(function(stateData) {
