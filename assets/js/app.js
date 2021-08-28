@@ -1,3 +1,4 @@
+
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -47,9 +48,6 @@ d3.csv("data.csv").then(function(stateData) {
     chartGroup.append("g")
       .call(leftAxis);
 
-
-    var circlesGroup = chartGroup.selectAll
-
     
     var circlesGroup = chartGroup.selectAll("circle")
       .data(stateData)
@@ -58,8 +56,10 @@ d3.csv("data.csv").then(function(stateData) {
       .attr("cx", d => xLinearScale(d.poverty))
       .attr("cy", d => yLinearScale(d.healthcare))
       .attr("r", "15")
-      .attr("fill", "blue")
-      .attr("opacity", ".40")
+      .attr("fill", "dodgerblue")
+      .attr("opacity", ".50")
+      .attr("stroke","blue")
+      .attr("stroke-width", 2);
       
 
     var circleLabels = chartGroup.selectAll(null)
