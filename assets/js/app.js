@@ -12,6 +12,8 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
+var chosenXAxis = "poverty";
+
 var svg = d3
     .select("#scatter")
     .append("svg")
@@ -52,6 +54,18 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
     return circlesGroup;
 }
+
+function renderLabels(circleLabels, newXScale, chosenXAxis) {
+
+    circleLabels.transition()
+        .duration(1000)
+        .attr("dx",  d => newXScale(d[chosenXAxis]));
+
+    return circleLabels;
+
+}
+
+
 
 function updateToolTip(chosenXAxis, circlesGroup) {
 
@@ -112,15 +126,15 @@ d3.csv("data.csv").then(function(stateData, err) {
             .classed("x-axis", true)
             .attr("transform", `translate(0, ${height})`)
             .call(bottomAxis);
-        
-        chartGroup.append("g")
+
+        var yAxis = chartGroup.append("g")
             .call(leftAxis);
 
         var circlesGroup = chartGroup.selectAll("circle")
             .data(stateData)
             .enter()
             .append("circle")
-            .attr("cx", d => xLinearScale(d.poverty))
+            .attr("cx", d => xLinearScale(d[chosenXAxis]))
             .attr("cy", d => yLinearScale(d.healthcare))
             .attr("r", "15")
             .attr("fill", "dodgerblue")
@@ -133,8 +147,8 @@ d3.csv("data.csv").then(function(stateData, err) {
               .data(stateData)
               .enter()
               .append("text")
-              .attr("x", d => xLinearScale(d.poverty))
-              .attr("y", d => yLinearScale(d.healthcare))
+              .attr("dx", d => xLinearScale(d[chosenXAxis]))
+              .attr("dy", d => yLinearScale(d.healthcare))
               .text(d => d.abbr)
               .attr("font-size", "11px")
               .attr("text-anchor", "middle")
@@ -161,7 +175,7 @@ d3.csv("data.csv").then(function(stateData, err) {
         var incomeLabel = labelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 60)
-            .attr("value", "poverty")
+            .attr("value", "income")
             .classed("inactive", true)
             .text("Household Income (Median)");
 
@@ -190,6 +204,11 @@ d3.csv("data.csv").then(function(stateData, err) {
                     circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
                     circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+                    circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis);
+
+                    // circlesXY = renderXY(circlesXY, xLinearScale, chosenXAxis);
+                    
 
                     if (chosenXAxis === "age") {
                         ageLabel
@@ -225,7 +244,9 @@ d3.csv("data.csv").then(function(stateData, err) {
                         incomeLabel
                             .classed("active", false)
                             .classed("inactive", true);
+
                      }
+      
                 }
             });
         }).catch(function(error) {
