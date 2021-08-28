@@ -98,7 +98,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         .on("mouseout", function(data) {
             toolTip.hide(data);
         });
-    
+
     return circlesGroup;
 }
 
@@ -130,6 +130,18 @@ d3.csv("data.csv").then(function(stateData, err) {
         var yAxis = chartGroup.append("g")
             .call(leftAxis);
 
+        var circleLabels = chartGroup.selectAll(null)
+            .data(stateData)
+            .enter()
+            .append("text")
+            .attr("dx", d => xLinearScale(d[chosenXAxis]))
+            .attr("dy", d => yLinearScale(d.healthcare))
+            .text(d => d.abbr)
+            .attr("font-size", "11px")
+            .attr("text-anchor", "middle")
+            .attr("alignment-baseline", "middle")
+            .attr("fill", "black");
+
         var circlesGroup = chartGroup.selectAll("circle")
             .data(stateData)
             .enter()
@@ -143,17 +155,7 @@ d3.csv("data.csv").then(function(stateData, err) {
             .attr("stroke-width", 2);
             
       
-        var circleLabels = chartGroup.selectAll(null)
-              .data(stateData)
-              .enter()
-              .append("text")
-              .attr("dx", d => xLinearScale(d[chosenXAxis]))
-              .attr("dy", d => yLinearScale(d.healthcare))
-              .text(d => d.abbr)
-              .attr("font-size", "11px")
-              .attr("text-anchor", "middle")
-              .attr("alignment-baseline", "middle")
-              .attr("fill", "white");
+        
 
         var labelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width /2}, ${height + 20})`);
@@ -205,10 +207,7 @@ d3.csv("data.csv").then(function(stateData, err) {
 
                     circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
-                    circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis);
-
-                    // circlesXY = renderXY(circlesXY, xLinearScale, chosenXAxis);
-                    
+                    circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis);                   
 
                     if (chosenXAxis === "age") {
                         ageLabel
