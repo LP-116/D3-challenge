@@ -1,12 +1,12 @@
 
-var svgWidth = 960;
-var svgHeight = 500;
+var svgWidth = 900;
+var svgHeight = 600;
 
 var margin = {
     top: 20,
     right: 40,
     bottom: 100,
-    left: 100
+    left: 90
 };
 
 var width = svgWidth - margin.left - margin.right;
@@ -40,7 +40,7 @@ function yScale(stateData, chosenYAxis) {
     var yLinearScale = d3.scaleLinear()
       .domain([d3.min(stateData, d => d[chosenYAxis]) * 0.8,
         d3.max(stateData, d => d[chosenYAxis]) * 1.2])
-      .range([0, height]);
+      .range([height, 2]);
 
     return yLinearScale;
 }
@@ -109,7 +109,8 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     var label;
 
     if (chosenXAxis === "poverty") {
-        label = "Poverty";
+        label = "Poverty",
+        value = (chosenXAxis + "%");
     }
 
     else if (chosenXAxis === "age") {
@@ -138,7 +139,13 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     var toolTip = d3.tip()
         .attr("class", "tooltip")
         .offset([0, 0])
-        .html(function(d) {return (`${d.state}<br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);
+        .html(function(d) {
+
+            if (chosenXAxis === "income") {
+                return (`${d.state}<br>${label}: ${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}`);}
+            
+            else {
+            return (`${d.state}<br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
     });
 
     circlesGroup.call(toolTip);
@@ -163,7 +170,7 @@ d3.csv("data.csv").then(function(stateData, err) {
             data.healthcare = +data.healthcare;
             data.age = +data.age;
             data.income = +data.income;
-            data.smokes = +data.smokes;
+            data.smokes = +data.smokes
             data.obesity = +data.obesity;
         });
 
@@ -181,7 +188,6 @@ d3.csv("data.csv").then(function(stateData, err) {
 
         var yAxis = chartGroup.append("g")
             .classed("y-axis", true)
-            // .attr("transform", `translate(0, ${width})`)
             .call(leftAxis);
 
         var circleLabels = chartGroup.selectAll(null)
@@ -202,7 +208,7 @@ d3.csv("data.csv").then(function(stateData, err) {
             .append("circle")
             .attr("cx", d => xLinearScale(d[chosenXAxis]))
             .attr("cy", d => yLinearScale(d[chosenYAxis]))
-            .attr("r", "15")
+            .attr("r", "12")
             .attr("fill", "dodgerblue")
             .attr("opacity", ".50")
             .attr("stroke","blue")
@@ -210,10 +216,9 @@ d3.csv("data.csv").then(function(stateData, err) {
             
 
         var labelsGroup = chartGroup.append("g")
-            // .attr("transform", `translate(${width /2}, ${height + 20})`);
+            .attr("transform", `translate(${width /2}, ${height + 20})`);
 
         var povertyLabel = labelsGroup.append("text")
-            .attr("transform", `translate(${width /2}, ${height + 20})`)
             .attr("x", 0)
             .attr("y", 20)
             .attr("value", "poverty")
@@ -221,7 +226,6 @@ d3.csv("data.csv").then(function(stateData, err) {
             .text("In Poverty (%)");
 
         var ageLabel = labelsGroup.append("text")
-            .attr("transform", `translate(${width /2}, ${height + 20})`)
             .attr("x", 0)
             .attr("y", 40)
             .attr("value", "age")
@@ -229,7 +233,6 @@ d3.csv("data.csv").then(function(stateData, err) {
             .text("Age (Median)");
         
         var incomeLabel = labelsGroup.append("text")
-            .attr("transform", `translate(${width /2}, ${height + 20})`)
             .attr("x", 0)
             .attr("y", 60)
             .attr("value", "income")
@@ -278,13 +281,11 @@ d3.csv("data.csv").then(function(stateData, err) {
 
                     xAxis = renderAxis(xLinearScale, xAxis);
 
-                    yAxis = renderYAxis(yLinearScale, yAxis);
-
-                    circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);
+                    circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
                     circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
-                    circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis, yLinearScale, chosenYAxis);                   
+                    circleLabels = renderLabels(circleLabels, xLinearScale, chosenXAxis);                   
 
                     if (chosenXAxis === "age") {
                         ageLabel
@@ -323,42 +324,6 @@ d3.csv("data.csv").then(function(stateData, err) {
 
                      }
 
-                    if (chosenYAxis === "smokes") {
-                        smokesLabel
-                            .classed("active", true)
-                            .classed("inactive", false);
-                        healthcareLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-                        obesityLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-                    }
-                    
-                    else if (chosenYAxis === "obesity") {
-                        smokesLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-                        healthcareLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-                        obesityLabel
-                            .classed("active", true)
-                            .classed("inactive", false);
-                    }
-
-                    else {
-                        smokesLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-                        healthcareLabel
-                            .classed("active", true)
-                            .classed("inactive", false);
-                        obesityLabel
-                            .classed("active", false)
-                            .classed("inactive", true);
-
-                     }     
       
                 }
             });
@@ -368,7 +333,7 @@ d3.csv("data.csv").then(function(stateData, err) {
 
                 var yvalue = d3.select(this).attr("yvalue");
         
-                if (yvalue !== chosenXAxis) {
+                if (yvalue !== chosenYAxis) {
 
                     chosenYAxis = yvalue;
 
@@ -376,11 +341,11 @@ d3.csv("data.csv").then(function(stateData, err) {
 
                     yAxis = renderYAxis(yLinearScale, yAxis);
 
-                    circlesGroup = renderCircles(circlesGroup, yLinearScale, chosenYAxis);
+                    circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis);
 
                     circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
-                    circleLabels = renderLabels(circleLabels, yLinearScale, chosenYAxis);                   
+                    circleLabels = renderYLabels(circleLabels, yLinearScale, chosenYAxis);                   
 
                     if (chosenYAxis === "smokes") {
                         smokesLabel
