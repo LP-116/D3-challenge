@@ -13,6 +13,7 @@ var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
 var chosenXAxis = "poverty";
+var chosenYAxis = "healthcare";
 
 var svg = d3
     .select("#scatter")
@@ -24,8 +25,6 @@ var svg = d3
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-var chosenXAxis = "poverty"
-
 function xScale(stateData, chosenXAxis) {
 
     var xLinearScale = d3.scaleLinear()
@@ -34,6 +33,16 @@ function xScale(stateData, chosenXAxis) {
       .range([0, width]);
 
     return xLinearScale;
+}
+
+function yScale(stateData, chosenYAxis) {
+
+    var yLinearScale = d3.scaleLinear()
+      .domain([d3.min(stateData, d => d[chosenYAxis]) * 0.8,
+        d3.max(stateData, d => d[chosenYAxis]) * 1.2])
+      .range([0, height]);
+
+    return yLinearScale;
 }
 
 function renderAxis(newXScale, xAxis) {
@@ -46,20 +55,32 @@ function renderAxis(newXScale, xAxis) {
     return xAxis;
 }
 
-function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+function renderYAxis(newYScale, yAxis) {
+    var leftAxis = d3.axisLeft(newYScale);
+
+    yAxis.transition()
+        .duration(1000)
+        .call(leftAxis);
+    
+    return yAxis;
+}
+
+function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
     circlesGroup.transition()
         .duration(1000)
-        .attr("cx",  d => newXScale(d[chosenXAxis]));
+        .attr("cx",  d => newXScale(d[chosenXAxis]))
+        .attr("cy", d => yLinearScale(d[chosenYAxis]));
 
     return circlesGroup;
 }
 
-function renderLabels(circleLabels, newXScale, chosenXAxis) {
+function renderLabels(circleLabels, newXScale, newYScale, chosenXAxis, chosenYAxis) {
 
     circleLabels.transition()
         .duration(1000)
         .attr("dx",  d => newXScale(d[chosenXAxis]));
+        .attr("dy",  d => newXScale(d[chosenYAxis]));
 
     return circleLabels;
 
@@ -155,7 +176,6 @@ d3.csv("data.csv").then(function(stateData, err) {
             .attr("stroke-width", 2);
             
       
-        
 
         var labelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width /2}, ${height + 20})`);
