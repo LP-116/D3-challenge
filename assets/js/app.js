@@ -29,7 +29,7 @@ function xScale(stateData, chosenXAxis) {
 
     var xLinearScale = d3.scaleLinear()
       .domain([d3.min(stateData, d => d[chosenXAxis]) * 0.8,
-        d3.max(stateData, d => d[chosenXAxis]) * 1.2])
+        d3.max(stateData, d => d[chosenXAxis]) * 1.1])
       .range([0, width]);
 
     return xLinearScale;
@@ -39,7 +39,7 @@ function yScale(stateData, chosenYAxis) {
 
     var yLinearScale = d3.scaleLinear()
       .domain([d3.min(stateData, d => d[chosenYAxis]) * 0.8,
-        d3.max(stateData, d => d[chosenYAxis]) * 1.2])
+        d3.max(stateData, d => d[chosenYAxis]) * 1.1])
       .range([height, 2]);
 
     return yLinearScale;
@@ -141,11 +141,14 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         .offset([0, 0])
         .html(function(d) {
 
-            if (chosenXAxis === "income") {
-                return (`${d.state}<br>${label}: ${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}`);}
+            if (chosenXAxis === "poverty") {
+                return (`${d.state}<br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
             
+            else if (chosenXAxis === "income") {
+                return (`${d.state}<br>${label}: $${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
+
             else {
-            return (`${d.state}<br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
+            return (`${d.state}<br>${label}: ${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
     });
 
     circlesGroup.call(toolTip);
