@@ -1,5 +1,5 @@
 
-var svgWidth = 900;
+var svgWidth = 1100;
 var svgHeight = 600;
 
 var margin = {
@@ -245,21 +245,21 @@ d3.csv("data.csv").then(function(stateData, err) {
 
 
         var healthcareLabel = ylabelsGroup.append("text")
-            .attr("y", 0 - margin.left + 50)
+            .attr("y", 0 - margin.left + 55)
             .attr("x", 0 - (height / 2))
             .attr("yvalue", "healthcare")
             .classed("active", true)
             .text("Lacks Healthcare %");
 
         var smokesLabel = ylabelsGroup.append("text")
-            .attr("y", 0 - margin.left + 30)
+            .attr("y", 0 - margin.left + 35)
             .attr("x", 0 - (height / 2))
             .attr("yvalue", "smokes")
             .classed("inactive", true)
             .text("Smokes %");
         
         var obesityLabel = ylabelsGroup.append("text")
-            .attr("y", 0 - margin.left + 10)
+            .attr("y", 0 - margin.left + 15)
             .attr("x", 0 - (height / 2))
             .attr("yvalue", "obesity")
             .classed("inactive", true)
