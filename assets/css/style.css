@@ -68,9 +68,3 @@ body {
 }
 
 
-@media (max-width: 780px) {
-  #scatter {
-      height: 500;
-      width: 200;}
-
-  }
