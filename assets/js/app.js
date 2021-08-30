@@ -19,8 +19,9 @@ var svg = d3
     .select("#scatter")
     .append("svg")
     .classed("graph", true)
-    .attr("width", svgWidth)
-    .attr("height", svgHeight);
+    .attr("viewBox", `0 0 1000 600`)
+    // .attr("width", svgWidth)
+    // .attr("height", svgHeight);
 
 
 var chartGroup = svg.append("g")
@@ -399,17 +400,6 @@ d3.csv("data.csv").then(function(stateData, err) {
            
 
     
-
-
-
-
-
-
-
-
-
-
-
 
 
 
