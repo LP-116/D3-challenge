@@ -142,13 +142,13 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         .html(function(d) {
 
             if (chosenXAxis === "poverty") {
-                return (`${d.state}<br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
+                return (`<b>${d.state}</b><br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
             
             else if (chosenXAxis === "income") {
-                return (`${d.state}<br>${label}: $${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
+                return (`<b>${d.state}</b><br>${label}: $${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
 
             else {
-            return (`${d.state}<br>${label}: ${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
+            return (`<b>${d.state}</b><br>${label}: ${d[chosenXAxis]} <br>${ylabel}: ${d[chosenYAxis]}%`);}
     });
 
     circlesGroup.call(toolTip);

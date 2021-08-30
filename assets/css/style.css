@@ -29,3 +29,18 @@ body {
   margin: 0;
   font-size: 16px;
 }
+
+.tooltip {
+  position: absolute;
+  width: 115px;
+  height: 60px;
+  padding: 2px;
+  padding-top: 8px;
+  font: 12px sans-serif;
+  color: white;
+  text-align: center;
+  background:  teal;
+  border: 4;
+  border-color:black;
+  border-radius: 10px;
+}
