@@ -1,5 +1,5 @@
 
-var svgWidth = 1100;
+var svgWidth = 1000;
 var svgHeight = 600;
 
 var margin = {
@@ -18,6 +18,7 @@ var chosenYAxis = "healthcare";
 var svg = d3
     .select("#scatter")
     .append("svg")
+    .classed("graph", true)
     .attr("width", svgWidth)
     .attr("height", svgHeight);
 
