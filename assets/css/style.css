@@ -18,13 +18,13 @@ body {
 
 #footer {
   position: absolute;
-  bottom: 0;
+  bottom: 5px;
   width: 100%; /* Set the fixed height of the footer here */
   height: 10px;
   padding-top: 20px;
   padding-bottom: 40px;
   text-align: center;
-
+  color: white;
 }
 
 #footer p {
@@ -47,24 +47,6 @@ body {
   border-radius: 10px;
 }
 
-
-.jumbotron {
-  background-image: url("/../assets/images/data.png");
-  background-size: cover;
-  color:white;
-  font-size: 20px !important ;
-  margin-bottom: 10px
-
-}
-
-.jumbotron h1{
-  font-weight: 800;
-  }
-
-.jumbotron p{
-  font-weight: 500;
-  color: black
-}
 
 .graph {
   align-items: center;
