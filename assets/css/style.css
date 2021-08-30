@@ -60,4 +60,9 @@ body {
 }
 .navbar-brand {
   float:none;
+  
+}
+
+.icon {
+  color: white;
 }
