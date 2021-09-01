@@ -1,6 +1,6 @@
 # D3 Challenge
 ## D3 Homework - Data Journalism and D3
-## To view the interactive graph click [here](https://lp-116.github.io/d3-challenge/)
+## To view the interactive graph click [here](https://lp-116.github.io/D3-challenge/)
 
 ---
 ### Task
@@ -57,7 +57,7 @@ The HTML and CSS page was also formatted to give a professional view of the data
 ---
 ### Results
 
-Scatterplot was generated successfully with all axis's functional. The webpage has been deployed on Github and can be accessed [here](https://lp-116.github.io/d3-challenge/)
+Scatterplot was generated successfully with all axis's functional. The webpage has been deployed on Github and can be accessed [here](https://lp-116.github.io/D3-challenge/)
 
 <img src="https://user-images.githubusercontent.com/82348616/131609510-efe44005-f9f1-419d-bfcb-06859014fd23.png" width="700">
 
