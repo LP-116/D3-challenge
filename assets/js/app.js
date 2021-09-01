@@ -253,18 +253,7 @@ d3.csv("data.csv").then(function(stateData, err) {
             .attr("opacity", ".50")
             .attr("stroke","blue")
             .attr("stroke-width", 2)
-            .on("mouseover", function() {
-                d3.select(this)
-                    .attr("stroke", "black")
-                    .attr("stroke-width", 1);
-            })
-            .on("mouseout", function() {
-                d3.select(this)
-                    .attr("stroke","blue");
-              
-            })
-
-            
+           
         // Creating group for xlabels.
         var labelsGroup = chartGroup.append("g")
             .attr("transform", `translate(${width /2}, ${height + 20})`);
