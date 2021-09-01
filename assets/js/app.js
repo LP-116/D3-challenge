@@ -172,7 +172,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
     circlesGroup.on("mouseover", function(data) {
         d3.select(this)
-        .attr("stroke", "blueviolet")
+        .attr("stroke", "darkviolet")
         .attr("stroke-width", 3)
         
         toolTip.show(data, this);
