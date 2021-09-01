@@ -171,10 +171,19 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
     circlesGroup.call(toolTip);
 
     circlesGroup.on("mouseover", function(data) {
+        d3.select(this)
+        .attr("stroke", "blueviolet")
+        .attr("stroke-width", 3)
+        
         toolTip.show(data, this);
+     
     })
 
         .on("mouseout", function(data) {
+
+            d3.select(this)
+            .attr("stroke","blue")
+            .attr("stroke-width", 2)
             toolTip.hide(data);
         });
 
@@ -230,6 +239,7 @@ d3.csv("data.csv").then(function(stateData, err) {
             .attr("alignment-baseline", "middle")
             .attr("fill", "black");
 
+
         // Appending initial circles.
         var circlesGroup = chartGroup.selectAll("circle")
             .data(stateData)
@@ -241,7 +251,18 @@ d3.csv("data.csv").then(function(stateData, err) {
             .attr("fill", "dodgerblue")
             .attr("opacity", ".50")
             .attr("stroke","blue")
-            .attr("stroke-width", 2);
+            .attr("stroke-width", 2)
+            .on("mouseover", function() {
+                d3.select(this)
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 1);
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                    .attr("stroke","blue");
+              
+            })
+
             
         // Creating group for xlabels.
         var labelsGroup = chartGroup.append("g")
