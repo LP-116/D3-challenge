@@ -157,6 +157,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
         .offset([0, 0])
         .html(function(d) {
 
+            // Changes the popup formatting depending on selection (i.e.income has a $, poverty has % on both axis selection, age has % only on one axis.)
             if (chosenXAxis === "poverty") {
                 return (`<u><b>${d.state}</b></u><br>${label}: ${d[chosenXAxis]}% <br>${ylabel}: ${d[chosenYAxis]}%`);}
             
