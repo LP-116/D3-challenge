@@ -40,7 +40,7 @@ body {
   padding-top: 8px;
   font: 12px sans-serif !important;
   color: white;
-  text-align: center;
+  text-align: center !important;
   background:  teal;
   border: 4;
   border-color:black;
