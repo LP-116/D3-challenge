@@ -1,5 +1,5 @@
 # D3 Challenge
-## D3 Homework - Data Journalism and D3
+## Data Journalism and D3
 ## To view the interactive graph click [here](https://lp-116.github.io/D3-challenge/)
 
 ---
